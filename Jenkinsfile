@@ -94,7 +94,7 @@ spec:
         container('maven') {
           sh 'gpg -q --import ${GPG_PUB_KEY} '
           sh 'gpg -q --allow-secret-key-import --import --no-tty --batch --yes ${GPG_SEC_KEY}'
-          sh "mvn -B -s .ci/settings.xml -DskipTests -DdryRun=true release:prepare -DreleaseVersion=${params.RELEASE_VERSION} -DdevelopmentVersion=${params.DEVELOPMENT_VERSION} -Dgpg.passphrase=\${GPG_PASS}"
+          sh "mvn -B -s .ci/settings.xml -DskipTests -DdryRun=true release:prepare -DreleaseVersion=${params.RELEASE_VERSION} -DdevelopmentVersion=${params.DEVELOPMENT_VERSION}"
         }
       }
     }
