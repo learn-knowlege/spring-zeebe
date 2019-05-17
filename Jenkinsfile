@@ -78,7 +78,7 @@ spec:
 
     stage('Release') {
       when {
-        allof {
+        allOf {
           branch 'cloud-ci'; expression { params.RELEASE }
         }
       }
