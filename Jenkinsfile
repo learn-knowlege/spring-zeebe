@@ -68,6 +68,7 @@ spec:
     }
 
     stage('Upload') {
+      when { branch 'master' }
       steps {
         container('maven') {
             sh 'mvn -B -s .ci/settings.xml deploy'
@@ -77,7 +78,9 @@ spec:
 
     stage('Release') {
       when {
-        expression { params.RELEASE }
+        allof {
+          branch 'cloud-ci'; expression { params.RELEASE }
+        }
       }
 
       environment {
@@ -89,9 +92,8 @@ spec:
 
       steps {
         container('maven') {
-          sh 'apt-get update && apt-get install gnupg'
           sh 'gpg -q --import ${GPG_PUB_KEY} '
-          sh 'gpg -q --allow-secret-key-import --import ${GPG_SEC_KEY}'
+          sh 'gpg -q --allow-secret-key-import --import --no-tty --batch --yes ${GPG_SEC_KEY}'
           sh "mvn -B -s .ci/settings.xml -DskipTests -DdryRun=true release:prepare -DreleaseVersion=${params.RELEASE_VERSION} -DdevelopmentVersion=${params.DEVELOPMENT_VERSION} -Dgpg.passphrase=\${GPG_PASS}"
         }
       }
