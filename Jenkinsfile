@@ -82,6 +82,7 @@ spec:
       }
 
       steps {
+        sh 'apt-get update && apt-get install gnupg'
         sh 'gpg -q --import ${GPG_PUB_KEY} '
         sh 'gpg -q --allow-secret-key-import --import ${GPG_SEC_KEY}'
         sh "mvn -B -s .ci/settings.xml -DdryRun=true release:prepare -DreleaseVersion=${params.RELEASE_VERSION} -DdevelopmentVersion=${params.DEVELOPMENT_VERSION} -Dgpg.passphrase=\${GPG_PASS}"
