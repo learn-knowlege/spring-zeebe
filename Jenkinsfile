@@ -84,7 +84,7 @@ spec:
       }
 
       environment {
-        NEXUS = credentials('maven_central_deployment_credentials')
+        MAVEN_CENTRAL = credentials('maven_central_deployment_credentials')
         GPG_PASS = credentials('password_maven_central_gpg_signing_key')
         GPG_PUB_KEY = credentials('maven_central_gpg_signing_key_pub')
         GPG_SEC_KEY = credentials('maven_central_gpg_signing_key_sec')
